@@ -9,6 +9,7 @@ export default defineConfig({
       title: 'TEDx Unair API Docs',
       description: 'Dokumentasi REST API backend TEDx Universitas Airlangga',
       favicon: '/favicon.svg',
+      tableOfContents: false,
       customCss: ['./src/styles/custom.css'],
       logo: {
         src: './src/assets/logo.svg',
