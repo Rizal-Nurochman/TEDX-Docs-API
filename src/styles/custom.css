@@ -1,11 +1,69 @@
-/* Custom sidebar styling — inspired by Nylas docs */
+/* Custom styling — inspired by Nylas docs */
 :root {
   --sl-color-accent: #ec1c24;
   --sl-color-accent-high: #ff5a5f;
   --sl-color-accent-low: #3a0d0f;
 }
 
-/* Group label styling */
+/* ===== Hero section ===== */
+.hero {
+  padding-block: 2rem 1rem;
+}
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.hero .tagline {
+  font-size: 1.125rem;
+  color: var(--sl-color-gray-3);
+  max-width: 46rem;
+  line-height: 1.6;
+}
+.hero .actions {
+  margin-top: 1.5rem;
+}
+
+/* ===== Card grid (Explore by group) ===== */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-block: 1.5rem;
+}
+.card {
+  display: flex;
+  gap: 0.875rem;
+  align-items: flex-start;
+  padding: 1.25rem;
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.75rem;
+  background-color: var(--sl-color-gray-7);
+  text-decoration: none;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.card:hover {
+  border-color: var(--sl-color-accent);
+  transform: translateY(-2px);
+}
+.card-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+.card-body h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--sl-color-white);
+}
+.card-body p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--sl-color-gray-3);
+  line-height: 1.5;
+}
+
+/* ===== Sidebar ===== */
 .sidebar-content .group-label {
   font-size: 0.75rem;
   font-weight: 700;
@@ -13,20 +71,26 @@
   text-transform: uppercase;
   color: var(--sl-color-gray-3);
 }
-
-/* Active link highlight */
 .sidebar-content a[aria-current='page'] {
   background-color: var(--sl-color-accent-low);
   color: var(--sl-color-accent-high);
   font-weight: 600;
 }
-
-/* Hover state */
 .sidebar-content a:hover {
   background-color: var(--sl-color-gray-6);
 }
-
-/* Badge alignment */
 .sidebar-content .sl-badge {
   margin-left: auto;
+}
+
+/* ===== Tables (Nylas-style) ===== */
+.sl-markdown-content table {
+  font-size: 0.875rem;
+}
+.sl-markdown-content th {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--sl-color-gray-3);
 }
