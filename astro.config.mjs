@@ -8,6 +8,8 @@ export default defineConfig({
     starlight({
       title: 'TEDx Unair API Docs',
       description: 'Dokumentasi REST API backend TEDx Universitas Airlangga',
+      favicon: '/favicon.svg',
+      customCss: ['./src/styles/custom.css'],
       logo: {
         src: './src/assets/logo.svg',
         replacesTitle: true,
