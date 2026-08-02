@@ -30,12 +30,12 @@ export default defineConfig({
         {
           label: 'Auth',
           items: [
-            { label: 'Register', link: '/auth/register/' },
-            { label: 'Login', link: '/auth/login/' },
-            { label: 'Refresh Token', link: '/auth/refresh-token/' },
-            { label: 'Logout', link: '/auth/logout/' },
-            { label: 'Verifikasi Email', link: '/auth/verification/' },
-            { label: 'Reset Password', link: '/auth/reset-password/' },
+            { label: 'Register', link: '/auth/register/', badge: { text: 'public', variant: 'note' } },
+            { label: 'Login', link: '/auth/login/', badge: { text: 'public', variant: 'note' } },
+            { label: 'Refresh Token', link: '/auth/refresh-token/', badge: { text: 'public', variant: 'note' } },
+            { label: 'Logout', link: '/auth/logout/', badge: { text: 'auth', variant: 'danger' } },
+            { label: 'Verifikasi Email', link: '/auth/verification/', badge: { text: 'public', variant: 'note' } },
+            { label: 'Reset Password', link: '/auth/reset-password/', badge: { text: 'public', variant: 'note' } },
           ],
         },
       ],
