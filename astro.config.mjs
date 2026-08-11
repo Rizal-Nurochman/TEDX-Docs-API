@@ -37,6 +37,24 @@ export default defineConfig({
             { label: 'Reset Password', link: '/auth/reset-password/' },
           ],
         },
+        {
+          label: 'Bundle',
+          items: [
+            { label: 'Bundle', link: '/bundle/' },
+          ],
+        },
+        {
+          label: 'Merchandise',
+          items: [
+            { label: 'Merchandise', link: '/merchandise/' },
+          ],
+        },
+        {
+          label: 'User',
+          items: [
+            { label: 'User', link: '/user/' },
+          ],
+        },
       ],
     }),
   ],

@@ -32,6 +32,15 @@ implementasi). Saat sukses, `error` umumnya tidak ada; saat ber-paginasi, `meta`
 muncul.
 :::
 
+:::note[Array polos vs paginasi]
+Endpoint yang **tidak** ber-paginasi mengembalikan `data` sebagai **array polos**
+langsung (tanpa pembungkus `data`/`meta`). Contoh: `GET /bundles` dan
+`GET /merchandise` mengembalikan `data: [...]`.
+
+Endpoint yang ber-paginasi mengembalikan `data` berisi `{ "data": [...], "meta": {...} }`.
+Contoh: `GET /users`.
+:::
+
 ## Status HTTP
 
 Konvensi status HTTP yang dipakai:
@@ -47,21 +56,42 @@ Konvensi status HTTP yang dipakai:
 
 ## Contoh sukses
 
-Daftar todo:
+Daftar bundle (array polos, tanpa paginasi):
 
 ```json
 {
   "status": true,
-  "message": "success get list todo",
+  "message": "success get list bundle",
+  "data": [
+    {
+      "id": "6f4b6a5e-...",
+      "name": "Bundle Starter",
+      "description": "Tote bag + sticker",
+      "price": "150000.00",
+      "is_active": true,
+      "created_at": "2026-07-01T10:00:00Z",
+      "updated_at": "2026-07-01T10:00:00Z"
+    }
+  ]
+}
+```
+
+Daftar user (ber-paginasi):
+
+```json
+{
+  "status": true,
+  "message": "success get list user",
   "data": {
     "data": [
       {
         "id": "6f4b6a5e-...",
-        "name": "Belajar Go",
-        "category": "belajar",
-        "is_done": false,
-        "created_at": "2026-07-01T10:00:00Z",
-        "updated_at": "2026-07-01T10:00:00Z"
+        "name": "Budi",
+        "email": "budi@example.com",
+        "telp_number": "081234567890",
+        "role": "user",
+        "image_url": "",
+        "is_verified": true
       }
     ],
     "meta": {

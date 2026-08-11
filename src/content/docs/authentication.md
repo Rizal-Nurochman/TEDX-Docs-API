@@ -53,3 +53,10 @@ mengembalikan `401 Unauthorized`.
 - **Auth `/logout`** — wajib Bearer.
 - **Auth lainnya** (`/register`, `/login`, `/refresh`, verifikasi, reset password)
   — tidak butuh Bearer.
+- **Bundle & Merchandise** — endpoint baca (GET) publik; endpoint tulis
+  (POST/PATCH/DELETE + gambar) wajib Bearer **dengan role `admin`**.
+- **User** — semua endpoint (`/users`) wajib Bearer **dengan role `admin`**.
+
+> Endpoint admin memakai middleware `AuthorizeAdmin` (dirantai setelah
+> `Authenticate`). Token dengan role `user` yang memanggil endpoint admin
+> mendapat `403 Forbidden`.
