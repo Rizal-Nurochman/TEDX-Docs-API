@@ -26,10 +26,10 @@ Base path: `/api/v1/merchandise`
 
 Query parameter:
 
-| Param      | Tipe  | Wajib | Deskripsi |
-|------------|-------|-------|-----------|
-| `is_active`| bool  | —     | Filter status. **Default `true`** (hanya item aktif) |
-| `category` | string| —     | Filter kategori: `t-shirt`, `cap`, `sticker`, `other` |
+| Param        | Tipe  | Wajib | Deskripsi |
+|--------------|-------|-------|-----------|
+| `is_active`  | bool  | —     | Filter status. **Default `true`** (hanya item aktif) |
+| `category_id`| UUID  | —     | Filter kategori (lihat [Categories](/categories/)) |
 
 > Tanpa parameter, endpoint publik ini hanya mengembalikan merchandise **aktif**.
 > Kirim `?is_active=false` untuk melihat item yang disembunyikan.
@@ -46,7 +46,10 @@ Response **200 OK** — `data` berupa **array polos** (tanpa `meta`):
       "name": "Tote Bag TEDx",
       "description": "Tote bag kanvas eksklusif",
       "price": "75000.00",
-      "category": "other",
+      "category": {
+        "id": "4e78c4ae-6a98-4a11-9bba-240e2fdc7bbe",
+        "name": "other"
+      },
       "is_active": true,
       "created_at": "2026-07-01T10:00:00Z",
       "updated_at": "2026-07-01T10:00:00Z",
@@ -73,20 +76,21 @@ Error: `404 Not Found` bila id tidak ada; `400` bila id bukan UUID valid.
 | `name`        | string  | ✓     | 1–255 karakter |
 | `description` | string  | ✓     | minimal 1 karakter |
 | `price`       | string  | ✓     | format desimal, 0 – 99999999.99 |
-| `category`    | string  | ✓     | `t-shirt`, `cap`, `sticker`, atau `other` |
+| `category_id` | UUID    | ✓     | id kategori yang sudah ada (lihat [Categories](/categories/)) |
 
 ```json
 {
   "name": "Tote Bag TEDx",
   "description": "Tote bag kanvas eksklusif",
   "price": "75000.00",
-  "category": "other"
+  "category_id": "4e78c4ae-6a98-4a11-9bba-240e2fdc7bbe"
 }
 ```
 
-Response **201 Created** — `data` berisi merchandise yang dibuat (`is_active` selalu `true`).
+Response **201 Created** — `data` berisi merchandise yang dibuat (`is_active` selalu `true`,
+dengan `category` nested `{id, name}`).
 
-Error: `400` bila kategori tidak valid (`category must be t-shirt, cap, sticker, or other`).
+Error: `400` bila `category_id` bukan UUID valid atau tidak ditemukan (`category not found`).
 
 ## Update merchandise
 
@@ -99,7 +103,7 @@ Semua field opsional (partial update):
 | `name`        | string  | 1–255 karakter |
 | `description` | string  | minimal 1 karakter |
 | `price`       | string  | format desimal, 0 – 99999999.99 |
-| `category`    | string  | `t-shirt`, `cap`, `sticker`, atau `other` |
+| `category_id` | UUID    | id kategori yang sudah ada |
 | `is_active`   | bool    | — |
 
 Response **200 OK** — `data` berisi merchandise setelah update.
@@ -136,6 +140,9 @@ Response **200 OK** — `data: null`. Error `400` bila gambar tidak ditemukan.
 
 ## Catatan
 
+- `category` dikembalikan sebagai objek nested (`{"id": "...", "name": "..."}`);
+  request mengirim `category_id` (UUID). Daftar kategori dikelola di endpoint
+  [Categories](/categories/).
 - `price` dikirim dan dikembalikan sebagai **string** (mis. `"75000.00"`) agar
   presisi uang terjaga di kedua sisi. Kolom DB: `numeric(10,2)`.
 - Merchandise selalu dibuat **aktif** — nonaktifkan lewat `PATCH` dengan `is_active: false`.

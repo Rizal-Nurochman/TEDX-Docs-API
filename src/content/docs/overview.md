@@ -47,6 +47,7 @@ halaman [Format Respon & Error](/response-format/).
 | Auth        | `/api/v1/auth`         | Sebagian |
 | Bundle      | `/api/v1/bundles`      | Baca publik, tulis admin |
 | Merchandise | `/api/v1/merchandise`  | Baca publik, tulis admin |
+| Categories  | `/api/v1/categories`   | Baca publik, tulis admin |
 | User        | `/api/v1/users`        | Admin |
 
 ## Ringkasan Route
@@ -80,13 +81,23 @@ halaman [Format Respon & Error](/response-format/).
 
 | Method | Path                        | Auth          | Deskripsi |
 |--------|-----------------------------|---------------|-----------|
-| GET    | ``                          | —             | Daftar merchandise (filter `is_active`, `category`) |
+| GET    | ``                          | —             | Daftar merchandise (filter `is_active`, `category_id`) |
 | GET    | `/:id`                      | —             | Detail merchandise + gambar |
 | POST   | ``                          | Bearer (admin)| Buat merchandise |
 | PATCH  | `/:id`                      | Bearer (admin)| Update merchandise |
 | DELETE | `/:id`                      | Bearer (admin)| Hapus merchandise |
 | POST   | `/:id/images`               | Bearer (admin)| Tambah gambar |
 | DELETE | `/:id/images/:imageId`      | Bearer (admin)| Hapus gambar |
+
+### Categories — `/api/v1/categories`
+
+| Method | Path   | Auth          | Deskripsi |
+|--------|--------|---------------|-----------|
+| GET    | ``     | —             | Daftar kategori |
+| GET    | `/:id` | —             | Detail kategori |
+| POST   | ``     | Bearer (admin)| Buat kategori |
+| PATCH  | `/:id` | Bearer (admin)| Update kategori |
+| DELETE | `/:id` | Bearer (admin)| Hapus kategori |
 
 ### User — `/api/v1/users`
 

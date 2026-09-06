@@ -47,6 +47,7 @@ export default defineConfig({
           label: 'Merchandise',
           items: [
             { label: 'Merchandise', link: '/merchandise/' },
+            { label: 'Categories', link: '/categories/' },
           ],
         },
         {
