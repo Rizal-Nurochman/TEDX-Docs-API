@@ -48,6 +48,8 @@ halaman [Format Respon & Error](/response-format/).
 | Bundle      | `/api/v1/bundles`      | Baca publik, tulis admin |
 | Merchandise | `/api/v1/merchandise`  | Baca publik, tulis admin |
 | Categories  | `/api/v1/categories`   | Baca publik, tulis admin |
+| Ticket      | `/api/v1/tickets`      | Baca publik, tulis admin |
+| Order       | `/api/v1/orders`       | User & Admin |
 | User        | `/api/v1/users`        | Admin |
 
 ## Ringkasan Route
@@ -98,6 +100,31 @@ halaman [Format Respon & Error](/response-format/).
 | POST   | ``     | Bearer (admin)| Buat kategori |
 | PATCH  | `/:id` | Bearer (admin)| Update kategori |
 | DELETE | `/:id` | Bearer (admin)| Hapus kategori |
+
+### Ticket — `/api/v1/tickets`
+
+| Method | Path                        | Auth          | Deskripsi |
+|--------|-----------------------------|---------------|-----------|
+| GET    | ``                          | —             | Daftar tiket (default hanya aktif) |
+| GET    | `/:id`                      | —             | Detail tiket + tier |
+| POST   | ``                          | Bearer (admin)| Buat tiket |
+| PATCH  | `/:id`                      | Bearer (admin)| Update tiket |
+| DELETE | `/:id`                      | Bearer (admin)| Hapus tiket |
+| POST   | `/:id/tiers`                | Bearer (admin)| Buat tier (harga/kuota) |
+| PATCH  | `/:id/tiers/:tierId`        | Bearer (admin)| Update tier |
+| DELETE | `/:id/tiers/:tierId`        | Bearer (admin)| Hapus tier |
+
+### Order — `/api/v1/orders`
+
+| Method | Path                        | Auth          | Deskripsi |
+|--------|-----------------------------|---------------|-----------|
+| POST   | ``                          | Bearer (user) | Buat order (hold 15 menit) |
+| GET    | ``                          | Bearer (user) | Daftar order milik user |
+| GET    | `/:id`                      | Bearer (user) | Detail order milik user |
+| PATCH  | `/:id/proof`                | Bearer (user) | Upload bukti bayar (URL screenshot) |
+| GET    | `/admin/all`                | Bearer (admin)| Daftar semua order (filter status) |
+| PATCH  | `/:id/approve`              | Bearer (admin)| Approve → jadi paid + kirim email 3 QR |
+| PATCH  | `/:id/reject`               | Bearer (admin)| Reject + lepas hold |
 
 ### User — `/api/v1/users`
 

@@ -53,8 +53,9 @@ mengembalikan `401 Unauthorized`.
 - **Auth `/logout`** — wajib Bearer.
 - **Auth lainnya** (`/register`, `/login`, `/refresh`, verifikasi, reset password)
   — tidak butuh Bearer.
-- **Bundle & Merchandise** — endpoint baca (GET) publik; endpoint tulis
-  (POST/PATCH/DELETE + gambar) wajib Bearer **dengan role `admin`**.
+- **Bundle, Merchandise & Ticket** — endpoint baca (GET) publik; endpoint tulis
+  (POST/PATCH/DELETE + tier/gambar) wajib Bearer **dengan role `admin`**.
+- **Order** — `POST /orders`, `GET /orders`, `GET /orders/:id`, `PATCH /orders/:id/proof` wajib Bearer **user** (owner); `GET /orders/admin/all`, `PATCH /orders/:id/approve`, `PATCH /orders/:id/reject` wajib Bearer **admin**.
 - **User** — semua endpoint (`/users`) wajib Bearer **dengan role `admin`**.
 
 > Endpoint admin memakai middleware `AuthorizeAdmin` (dirantai setelah
