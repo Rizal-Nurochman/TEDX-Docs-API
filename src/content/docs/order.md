@@ -14,7 +14,7 @@ Base path: `/api/v1/orders`
 | POST   | ``                 | Bearer (user) | Buat order (hold) |
 | GET    | ``                 | Bearer (user) | List order milik user (paginasi) |
 | GET    | `/:id`             | Bearer (user) | Detail order milik user |
-| PATCH  | `/:id/proof`       | Bearer (user) | Upload bukti bayar (URL screenshot) |
+| PATCH  | `/:id/proof`       | Bearer (user) | Upload bukti bayar (file image → ImageKit) |
 | GET    | `/admin/all`       | Bearer (admin)| List semua order (filter `status`) |
 | PATCH  | `/:id/approve`     | Bearer (admin)| Approve → `paid` + email 3 QR |
 | PATCH  | `/:id/reject`      | Bearer (admin)| Reject + lepas hold |
@@ -69,19 +69,32 @@ Error: `400` `quota exceeded` bila `quota - filled - held < quantity`; `400` `sa
 
 ## Upload bukti
 
-**PATCH** `/api/v1/orders/:id/proof` — Bearer (user, owner)
+**PATCH** `/api/v1/orders/:id/proof` — Bearer (user, owner) — `multipart/form-data` (ImageKit)
 
-```json
-{"payment_proof_url":"https://cdn.example.com/bukti.jpg"}
+Request — **1 file** `file` (pilih screenshot dari galeri):
+
+```
+Content-Type: multipart/form-data
+file: bukti.jpg (jpg/jpeg/png/webp, max 5MB)
 ```
 
-| Field               | Tipe   | Wajib | Validasi |
-|---------------------|--------|-------|----------|
-| `payment_proof_url` | string | ✓     | URL valid, max 500 |
+Alternatif JSON (untuk Bruno/test):
+```json
+{"payment_proof_url":"https://ik.imagekit.io/tedxunair/orders/xxx.jpg"}
+```
 
-Error: `404` bila bukan milik user; `400` `order not awaiting approval` bila sudah `paid/rejected/expired`; `400` `order expired` bila lewat `expired_at`.
+| Field | Tipe | Wajib | Validasi |
+|-------|------|-------|----------|
+| `file` | file | ✓* | `jpg/jpeg/png/webp`, max 5MB |
+| `payment_proof_url` | string | ✓* | URL valid max 500 jika pakai JSON |
 
-Response **200** — `data` order dengan `payment_proof_url` terisi.
+*Salah satu: `file` untuk app asli (user pilih file), `payment_proof_url` untuk test.
+
+BE upload `file` ke **ImageKit** `https://ik.imagekit.io/tedxunair` (`IMAGEKIT_PRIVATE_KEY`) → dapat `https://ik.imagekit.io/tedxunair/orders/...` → simpan `payment_proof_url` di DB.
+
+Error: `404` bila bukan milik user; `400` `order not awaiting approval` / `order expired`; `400` `only jpg, jpeg, png, webp allowed` / `file too large`.
+
+Response **200** — `data` order dengan `payment_proof_url: "https://ik.imagekit.io/tedxunair/orders/..."` (bisa diakses admin via `GET /admin/all`).
 
 ## List order milik user
 
