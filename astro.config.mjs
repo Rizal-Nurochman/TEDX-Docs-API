@@ -51,6 +51,18 @@ export default defineConfig({
           ],
         },
         {
+          label: 'Ticket',
+          items: [
+            { label: 'Ticket', link: '/ticket/' },
+          ],
+        },
+        {
+          label: 'Order',
+          items: [
+            { label: 'Order', link: '/order/' },
+          ],
+        },
+        {
           label: 'User',
           items: [
             { label: 'User', link: '/user/' },
